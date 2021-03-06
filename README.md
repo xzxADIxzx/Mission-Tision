@@ -13,12 +13,11 @@ The outcome of the mission depends on your decisions.
 
 ## Game Modes
 
-
 ### Capture the **flag**
-See description...
+*See description...*
 
 ### Hassle
-The two squads met each other. The goal of each of them is to reach the opposite edge and prevent others from doing it.
+The two *squads* met each other. The goal of each of them is to *reach* the opposite edge and prevent others from doing it.
 
 ### Bots attack
 Two teams: **Attack** and **Support** fight againts bots.
