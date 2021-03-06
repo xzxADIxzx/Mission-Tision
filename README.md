@@ -13,6 +13,7 @@ The outcome of the mission depends on your decisions.
 
 ## Game Modes
 
+```
 ### Capture the **flag**
 See description...
 
@@ -24,3 +25,4 @@ Two teams: **Attack** and **Support** fight againts bots.
 The attack goes to the *hottest* spot, and support helps by managing *airstrikes* and providing *medical* assistance.
 
 *P.S. There will be new modes in the future!*
+```
