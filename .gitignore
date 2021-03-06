@@ -1,0 +1,7 @@
+.vs
+obj
+Temp
+Assets/Saves
+Assets/Saves.meta
+*.sublime-project
+*.sublime-workspace

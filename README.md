@@ -7,4 +7,4 @@ Small tactical shooter with two teams: **Defense** and **Attack**. The goal of t
 *P.S. There will be new modes in the future!*
 
 ## Gameplay
-At the beginning of the round, you choose your weapons, armor and tactical tricks. And be sure to discuss the plan with your partner. Then follow the plan! And be on the lookout, something will definitely go wrong. The outcome of the mission depends on your decisions.
+At the beginning of the round, you choose your weapons, armor and *tactical tricks*. And be sure to discuss the plan with your partner. Then follow the plan! And be on the lookout, something will definitely **go wrong**. The outcome of the mission depends on your decisions.
