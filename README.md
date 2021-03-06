@@ -12,7 +12,7 @@ Then follow the plan! And be on the lookout, something will definitely **go wron
 The outcome of the mission depends on your decisions.
 
 ## Game Modes
----
+
 ### Capture the **flag**
 See description...
 
