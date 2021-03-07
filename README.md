@@ -8,8 +8,8 @@ The goal of the attack team is to capture tactical information, the goal of defe
 ## Gameplay
 At the beginning of the round, you choose your weapons, armor and *tactical tricks*.
 And be sure to **discuss** the plan with your partner.
-Then follow the plan! And be on the lookout, something will definitely **go wrong**.
-The outcome of the mission depends on your decisions.
+Then follow the plan! And be on the *lookout*, something will definitely **go wrong**.
+The outcome of the mission depends on your *decisions*.
 
 ## Game Modes
 
