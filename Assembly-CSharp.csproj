@@ -63,12 +63,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Alpha.cs" />
+    <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\Settings\Settings.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsClear.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsControl.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsFolder.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsLanguage.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsVolume.cs" />
+    <Compile Include="Assets\Scripts\TrashObj.cs" />
+    <Compile Include="Assets\Scripts\Weapon.cs" />
+    <Compile Include="Assets\Scripts\WeaponManager.cs" />
+    <None Include="Assets\Animations\Это просто для того что бы GitHub загрузил папки на репозиторий.txt" />
+    <None Include="Assets\Music\Это просто для того что бы GitHub загрузил папки на репозиторий.txt" />
+    <None Include="Assets\Sprites\Это просто для того что бы GitHub загрузил папки на репозиторий.txt" />
+    <None Include="Assets\Prefabs\Это просто для того что бы GitHub загрузил папки на репозиторий.txt" />
+    <None Include="Assets\Sounds\Это просто для того что бы GitHub загрузил папки на репозиторий.txt" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

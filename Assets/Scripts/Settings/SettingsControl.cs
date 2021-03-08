@@ -54,45 +54,65 @@ public class SettingsControl : MonoBehaviour
             {
                 if (key != KeyCode.Escape && key != lastKey)
                 {
+                	int i = 0;
                     Color red = new Color(1, 0, 0);
                     switch (name)
                     {
                         case "up":
                             C.up = key;
-                            SCUI[0].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[0].GetComponent<Text>().color = red;
+                            i = 0;
                             break;
                         case "down":
                             C.down = key;
-                            SCUI[1].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[1].GetComponent<Text>().color = red;
+                            i = 1;
                             break;
                         case "right":
                             C.right = key;
-                            SCUI[2].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[2].GetComponent<Text>().color = red;
+                            i = 2;
                             break;
                         case "left":
                             C.left = key;
-                            SCUI[3].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[3].GetComponent<Text>().color = red;
+                            i = 3;
                             break;
-                        case "jump":
-                            C.jump = key;
-                            SCUI[4].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[4].GetComponent<Text>().color = red;
-                            break;
-                        case "dash":
+                        case "run":
                             C.run = key;
-                            SCUI[5].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[5].GetComponent<Text>().color = red;
+                            i = 4;
                             break;
-                        case "active":
-                            C.active = key;
-                            SCUI[6].GetComponent<Text>().text = $"[{key}]";
-                            SCUI[6].GetComponent<Text>().color = red;
+                        case "squat":
+                            C.squat = key;
+                            i = 5;
+                            break;
+                        case "liedown":
+                            C.liedown = key;
+                            i = 6;
+                            break;
+                        case "shoot":
+                            C.shoot = key;
+                            i = 7;
+                            break;
+                        case "aim":
+                            C.aim = key;
+                            i = 8;
+                            break;
+                        case "reload":
+                            C.reload = key;
+                            i = 9;
+                            break;
+                        case "buy":
+                            C.buy = key;
+                            i = 10;
+                            break;
+                        case "customize":
+                            C.customize = key;
+                            i = 11;
+                            break;
+                        case "action":
+                            C.action = key;
+                            i = 12;
                             break;
                     }
+                    SCUI[i].GetComponent<Text>().text = $"[{key}]";
+                    SCUI[i].GetComponent<Text>().color = red;
                     lastKey = key;
                     break;
                 }
@@ -119,9 +139,15 @@ public class SettingsControl : MonoBehaviour
         Settings.down = C.down;
         Settings.right = C.right;
         Settings.left = C.left;
-        Settings.jump = C.jump;
         Settings.run = C.run;
-        Settings.active = C.active;
+        Settings.squat = C.squat;
+        Settings.liedown = C.liedown;
+        Settings.shoot = C.shoot;
+        Settings.aim = C.aim;
+        Settings.reload = C.reload;
+        Settings.buy = C.buy;
+        Settings.customize = C.customize;
+        Settings.action = C.action;
     }
 
     async void Start()
@@ -142,8 +168,15 @@ public class SettingsControl : MonoBehaviour
         public KeyCode down = KeyCode.S;
         public KeyCode right = KeyCode.D;
         public KeyCode left = KeyCode.A;
-        public KeyCode jump = KeyCode.Space;
         public KeyCode run = KeyCode.LeftShift;
-        public KeyCode active = KeyCode.E;
+        public KeyCode squat = KeyCode.LeftControl;
+        public KeyCode liedown = KeyCode.Z;
+        public KeyCode shoot = KeyCode.Mouse0;
+        public KeyCode aim = KeyCode.Mouse1;
+        public KeyCode reload = KeyCode.R;
+        public KeyCode buy = KeyCode.Tab;
+        public KeyCode customize = KeyCode.T;
+        public KeyCode action = KeyCode.E;
+
     }
 }

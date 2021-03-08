@@ -28,7 +28,7 @@ public class Weapon : MonoBehaviour
     // How Many Bullets be Shooted in Semi Automatic Mode per Click
     [Header("Magazine")]
     [SerializeField] public Transform joint;
-    [SerializeField] GameObject magazine;
+    [SerializeField] public GameObject magazine;
     [SerializeField] int maxAmmo;
     [SerializeField] int[] magazines;
     [Header("Status")]
@@ -54,7 +54,7 @@ public class Weapon : MonoBehaviour
         {
             currentMagazine = maxMag;
             weaponManager.PickMag();
-            await Task.Delay(1000);
+            await Task.Delay(1600);
         }
         isRealoding = false;
     }

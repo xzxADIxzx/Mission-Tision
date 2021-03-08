@@ -9,8 +9,8 @@ public static class ExtensionMethods
         tran.localRotation = Quaternion.identity;
     }
 
-    public static void Reset(this Transform tran, Vector3 move){
+    public static void Reset(this Transform tran, Vector3 move, Vector3 rota){
     	tran.localPosition = Vector3.zero + move;
-        tran.localRotation = Quaternion.identity;
+        tran.localRotation = Quaternion.Euler(rota);
     }
 }

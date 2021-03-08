@@ -8,7 +8,13 @@ public static class Settings
 	public static KeyCode down;
 	public static KeyCode right;
 	public static KeyCode left;
-	public static KeyCode jump;
 	public static KeyCode run;
-	public static KeyCode active;
+	public static KeyCode squat;
+	public static KeyCode liedown;
+	public static KeyCode shoot;
+	public static KeyCode aim;
+	public static KeyCode reload;
+	public static KeyCode buy;
+	public static KeyCode customize;
+	public static KeyCode action;
 }
