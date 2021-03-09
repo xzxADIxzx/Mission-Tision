@@ -98,17 +98,33 @@ public class SettingsControl : MonoBehaviour
                             C.reload = key;
                             i = 9;
                             break;
+                        case "selFirst":
+                            C.selFirst = key;
+                            i = 10;
+                            break;
+                        case "selSecond":
+                            C.selSecond = key;
+                            i = 11;
+                            break;
+                        case "selThirt":
+                            C.selThirt = key;
+                            i = 12;
+                            break;
                         case "buy":
                             C.buy = key;
-                            i = 10;
+                            i = 13;
                             break;
                         case "customize":
                             C.customize = key;
-                            i = 11;
+                            i = 14;
+                            break;
+                        case "drop":
+                            C.drop = key;
+                            i = 15;
                             break;
                         case "action":
                             C.action = key;
-                            i = 12;
+                            i = 16;
                             break;
                     }
                     SCUI[i].GetComponent<Text>().text = $"[{key}]";
@@ -145,8 +161,12 @@ public class SettingsControl : MonoBehaviour
         Settings.shoot = C.shoot;
         Settings.aim = C.aim;
         Settings.reload = C.reload;
+        Settings.selFirst = C.selFirst;
+        Settings.selSecond = C.selSecond;
+        Settings.selThirt = C.selThirt;
         Settings.buy = C.buy;
         Settings.customize = C.customize;
+        Settings.drop = C.drop;
         Settings.action = C.action;
     }
 
@@ -174,8 +194,12 @@ public class SettingsControl : MonoBehaviour
         public KeyCode shoot = KeyCode.Mouse0;
         public KeyCode aim = KeyCode.Mouse1;
         public KeyCode reload = KeyCode.R;
+        public KeyCode selFirst = KeyCode.Alpha1;
+        public KeyCode selSecond = KeyCode.Alpha2;
+        public KeyCode selThirt = KeyCode.Alpha3;
         public KeyCode buy = KeyCode.Tab;
         public KeyCode customize = KeyCode.T;
+        public KeyCode drop = KeyCode.C;
         public KeyCode action = KeyCode.E;
 
     }
