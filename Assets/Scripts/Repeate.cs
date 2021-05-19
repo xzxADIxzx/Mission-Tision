@@ -29,9 +29,9 @@ public class Repeate : MonoBehaviour
 
     private void CorrectChildCount()
     {
-        count = Mathf.Clamp(Count, 1, 1000);
+        count = Mathf.Clamp(count, 1, 1000);
 
-        if (transform.childCount < Count)
+        if (transform.childCount < count)
         {
             for (int i = transform.childCount; i < count; i++)
             {
