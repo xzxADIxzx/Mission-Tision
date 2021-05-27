@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Alpha.cs" />
+    <Compile Include="Assets\Scripts\DollManager.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\Repeate.cs" />
     <Compile Include="Assets\Scripts\Settings\Settings.cs" />
@@ -71,6 +72,8 @@
     <Compile Include="Assets\Scripts\Settings\SettingsFolder.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsLanguage.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsVolume.cs" />
+    <Compile Include="Assets\Scripts\TestDollControler.cs" />
+    <Compile Include="Assets\Scripts\TestPlayerControler.cs" />
     <Compile Include="Assets\Scripts\TrashObj.cs" />
     <Compile Include="Assets\Scripts\UI\ShowAmmo.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
