@@ -24,3 +24,9 @@ Two teams: **Attack** and **Support** fight againts bots.
 The attack goes to the *hottest* spot, and support helps by managing *airstrikes* and providing *medical* assistance.
 
 *P.S. There will be new modes in the future!*
+
+## Server
+To play with friends, you can not only connect to an existing server, but also create your own!
+All you need to do is just launch the game through the *console...*
+* For Windows: <*Path to the game*>/"Mission Tision.exe" -server
+* For Linux: <*Path to the game*>/"Mission Tision.app" -server
