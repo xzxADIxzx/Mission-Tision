@@ -65,6 +65,11 @@
     <Compile Include="Assets\Scripts\Alpha.cs" />
     <Compile Include="Assets\Scripts\DollManager.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
+    <Compile Include="Assets\Scripts\Net\CommandLine.cs" />
+    <Compile Include="Assets\Scripts\Net\LMConvert.cs" />
+    <Compile Include="Assets\Scripts\Net\LobbyManagerClient.cs" />
+    <Compile Include="Assets\Scripts\Net\LobbyManagerServer.cs" />
+    <Compile Include="Assets\Scripts\Net\NetTest.cs" />
     <Compile Include="Assets\Scripts\Repeate.cs" />
     <Compile Include="Assets\Scripts\Settings\Settings.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsClear.cs" />
@@ -75,6 +80,7 @@
     <Compile Include="Assets\Scripts\TestDollControler.cs" />
     <Compile Include="Assets\Scripts\TestPlayerControler.cs" />
     <Compile Include="Assets\Scripts\TrashObj.cs" />
+    <Compile Include="Assets\Scripts\UI\Item.cs" />
     <Compile Include="Assets\Scripts\UI\ShowAmmo.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\WeaponManager.cs" />
@@ -263,6 +269,9 @@
     </Reference>
     <Reference Include="UnityEditor">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.25f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Cecil">
+      <HintPath>C:/Unity/Mission-Tision/Library/PackageCache/com.unity.nuget.mono-cecil@1.10.1-preview.1/Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="netstandard">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.25f1/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -630,6 +639,9 @@
     <Reference Include="Unity.Rider.Editor">
       <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.Multiplayer.MLAPI.Runtime">
+      <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/Unity.Multiplayer.MLAPI.Runtime.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
       <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
@@ -638,6 +650,9 @@
     </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Multiplayer.MLAPI.Prototyping">
+      <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/Unity.Multiplayer.MLAPI.Prototyping.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Unity/Mission-Tision/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>

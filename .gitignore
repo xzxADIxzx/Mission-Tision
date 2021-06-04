@@ -1,7 +1,13 @@
-.vs
-obj
+# Unity
+Logs
 Temp
 Assets/Saves
 Assets/Saves.meta
+
+# Visual Studio
+.vs
+obj
+
+# Sublime
 *.sublime-project
 *.sublime-workspace

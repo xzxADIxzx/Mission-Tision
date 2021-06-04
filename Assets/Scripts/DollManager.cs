@@ -6,6 +6,8 @@ public class DollManager : MonoBehaviour
 {
     [SerializeField] private Transform head;
     [Space(10)]
+    [SerializeField] private Transform body;
+    [Space(10)]
     [SerializeField] private Transform leftShoulder;
     [SerializeField] private Transform[] leftArm;
     [SerializeField] private Transform leftPalm;
