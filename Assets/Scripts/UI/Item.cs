@@ -8,4 +8,6 @@ public class Item : MonoBehaviour
     [SerializeField] public Image head;
     [SerializeField] public Text name;
     [SerializeField] public Text desc;
+    [SerializeField] public Button kick;
+    [SerializeField] public GameObject lobby;
 }

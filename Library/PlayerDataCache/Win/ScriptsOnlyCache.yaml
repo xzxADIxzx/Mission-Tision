@@ -6,14 +6,14 @@ ScriptsOnlyBuild:
     - Item
     - LobbyManagerClient
     - LobbyManagerServer
+    - Maps
     - NetTest
-    - Repeate
-    - ShowAmmo
     - TestDollControler
     - TestPlayerControler
     - Weapon
     Unity.2D.Tilemap.Editor.dll:
     - UnityEditor.Tilemaps.GridBrush
+    - UnityEditor.Tilemaps.GridBrushEditor
     - UnityEditor.Tilemaps.GridPaintPaletteClipboard
     - UnityEditor.Tilemaps.GridPaintPaletteWindow
     - UnityEditor.Tilemaps.GridPaintingState
@@ -80,11 +80,13 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 11422}
     - Class: 114
-      Script: {instanceID: 11534}
+      Script: {instanceID: 11436}
     - Class: 114
-      Script: {instanceID: 11662}
+      Script: {instanceID: 11536}
     - Class: 114
-      Script: {instanceID: 11962}
+      Script: {instanceID: 11664}
+    - Class: 114
+      Script: {instanceID: 11964}
     - Class: 114
       Script: {instanceID: 12050}
     - Class: 114
@@ -96,29 +98,25 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12520}
     - Class: 114
-      Script: {instanceID: 12666}
+      Script: {instanceID: 12664}
     - Class: 114
-      Script: {instanceID: 12742}
+      Script: {instanceID: 12740}
     - Class: 114
-      Script: {instanceID: 12798}
+      Script: {instanceID: 12796}
     - Class: 114
-      Script: {instanceID: 12884}
+      Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13030}
+      Script: {instanceID: 13074}
     - Class: 114
-      Script: {instanceID: 13068}
+      Script: {instanceID: 13080}
     - Class: 114
-      Script: {instanceID: 13076}
+      Script: {instanceID: 13104}
     - Class: 114
-      Script: {instanceID: 13082}
+      Script: {instanceID: 13274}
     - Class: 114
-      Script: {instanceID: 13106}
+      Script: {instanceID: 13534}
     - Class: 114
-      Script: {instanceID: 13276}
-    - Class: 114
-      Script: {instanceID: 13536}
-    - Class: 114
-      Script: {instanceID: 13574}
+      Script: {instanceID: 13572}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -170,10 +168,16 @@ ScriptsOnlyBuild:
     className: TMP_Dropdown
   - hash:
       serializedVersion: 2
-      Hash: bfbbb7da5960eb7a1373f5ba68574a9f
+      Hash: c1aa667900f3f1ff3548be395a2e834c
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: Item
+  - hash:
+      serializedVersion: 2
+      Hash: 6f56a0594147b2a2d3ee023fcaebfb93
+    assemblyName: Assembly-CSharp.dll
+    namespaceName: 
+    className: Maps
   - hash:
       serializedVersion: 2
       Hash: 34432c2a124a26f51569ac01fc6fcc4a
@@ -380,7 +384,7 @@ ScriptsOnlyBuild:
     className: NetworkTransform
   - hash:
       serializedVersion: 2
-      Hash: ebab759789fca02b75fc5b220596d3d7
+      Hash: 5dbcefd6db6de8c600620c90c0276078
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyManagerServer
@@ -554,7 +558,7 @@ ScriptsOnlyBuild:
     className: NetTest
   - hash:
       serializedVersion: 2
-      Hash: b6d0d5a9982ee4c660141aa53b48dd70
+      Hash: 92388acf1dc8621ee22d74e56f8d2ac0
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyManagerClient

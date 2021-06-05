@@ -13,6 +13,7 @@ public struct Player : INetworkSerializable
     public string name;
     public string desc;
     public Color color;
+    public bool isLobby;
 
     public Player(ulong id, string name, string desc, Color color)
     {
@@ -20,6 +21,7 @@ public struct Player : INetworkSerializable
         this.name = name;
         this.desc = desc;
         this.color = color;
+        this.isLobby = false;
     }
 
     public void NetworkSerialize(NetworkSerializer serializer)
@@ -28,6 +30,7 @@ public struct Player : INetworkSerializable
         serializer.Serialize(ref name);
         serializer.Serialize(ref desc);
         serializer.Serialize(ref color);
+        serializer.Serialize(ref isLobby);
     }
 }
 
@@ -37,17 +40,36 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] private List<Player> team1;
     [SerializeField] private List<Player> team2;
     [SerializeField] private Player newPlayer;
+    [SerializeField] private ulong lobbyID;
     [Header("Match")]
     [SerializeField] private string mode;
     [SerializeField] private string map;
+    [SerializeField] private List<string> modes;
     [Header("Scripts")]
+    [SerializeField] private Maps maps;
     [SerializeField] private LobbyManagerClient LMC;
     [SerializeField] private NetworkManager netMan;
 
+    public ClientRpcParams SendToLobby()
+    {
+        return new ClientRpcParams()
+        {
+            Send = new ClientRpcSendParams
+            {
+                TargetClientIds = new ulong[] { lobbyID }
+            }
+        };
+    }
+
     public void Approve(byte[] data, ulong id, NetworkManager.ConnectionApprovedDelegate callback)
     {
-        Debug.Log("Server: Approve " + (team1.Count + team2.Count< 10));
+        Debug.Log("Server: Approve " + (team1.Count + team2.Count < 10));
         newPlayer = LMConvert.ToPlayer(data, id);
+        if (NetworkManager.ConnectedClientsList.Count == 0)
+        {
+            newPlayer.isLobby = true;
+            lobbyID = id;
+        }
         callback(false, null, team1.Count + team2.Count < 10, Vector3.zero, Quaternion.identity);
     }
 
@@ -57,16 +79,33 @@ public class LobbyManagerServer : NetworkBehaviour
         if (team1.Count <= team2.Count) team1.Add(newPlayer);
         else team2.Add(newPlayer);
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
     }
 
     public void OnDisconnected(ulong id)
     {
+        Debug.Log("Server: OnDesconnected " + id);
         Player player = new Player();
         foreach (Player p in team1) if (p.id == id) player = p;
         foreach (Player p in team2) if (p.id == id) player = p;
         team1.Remove(player);
         team2.Remove(player);
+        if(team1.Count > 0) // Ужас
+        {
+            player = team1[0];
+            player.isLobby = true;
+            lobbyID = player.id;
+            team1[0] = player;
+        }
+        else if(team2.Count > 0)
+        {
+            player = team2[0];
+            player.isLobby = true;
+            lobbyID = player.id;
+            team2[0] = player;
+        }
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
     }
 
     public void AddCallbacks()
@@ -97,5 +136,65 @@ public class LobbyManagerServer : NetworkBehaviour
             team1.Add(player);
         }
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void NextModeServerRpc(ulong id)
+    {
+        Debug.Log("Server: NextModeServerRpc");
+        if (id != lobbyID) return;
+        int index = modes.IndexOf(mode) + 1;
+        if (index > modes.Count - 1) index = 0;
+        mode = modes[index];
+        if (!maps.GetMap(map).availableMode.Contains(mode)) map = maps.GetMaps(mode)[0].name;
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void PrevModeServerRpc(ulong id)
+    {
+        Debug.Log("Server: PrevModeServerRpc");
+        if (id != lobbyID) return;
+        int index = modes.IndexOf(mode) - 1;
+        if (index < 0) index = modes.Count - 1;
+        mode = modes[index];
+        if (!maps.GetMap(map).availableMode.Contains(mode)) map = maps.GetMaps(mode)[0].name;
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void NextMapServerRpc(ulong id)
+    {
+        Debug.Log("Server: NextMapServerRpc");
+        if (id != lobbyID) return;
+        List<Map> maps = this.maps.GetMaps(mode);
+        int index = maps.IndexOf(this.maps.GetMap(map)) + 1;
+        if (index > maps.Count - 1) index = 0;
+        map = maps[index].name;
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void PrevMapServerRpc(ulong id)
+    {
+        Debug.Log("Server: PrevMapServerRpc");
+        if (id != lobbyID) return;
+        List<Map> maps = this.maps.GetMaps(mode);
+        int index = maps.IndexOf(this.maps.GetMap(map)) - 1;
+        if (index < 0) index = maps.Count - 1;
+        map = maps[index].name;
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
+        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void KickServerRpc(ulong id, ulong clientId)
+    {
+        Debug.Log("Server: KickServerRpc");
+        NetworkManager.DisconnectClient(clientId);
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Net\LMConvert.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerClient.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerServer.cs" />
+    <Compile Include="Assets\Scripts\Net\Maps.cs" />
     <Compile Include="Assets\Scripts\Net\NetTest.cs" />
     <Compile Include="Assets\Scripts\Repeate.cs" />
     <Compile Include="Assets\Scripts\Settings\Settings.cs" />
