@@ -7,7 +7,6 @@ ScriptsOnlyBuild:
     - LobbyManagerClient
     - LobbyManagerServer
     - Maps
-    - NetTest
     - TestDollControler
     - TestPlayerControler
     - Weapon
@@ -106,17 +105,15 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 12882}
     - Class: 114
-      Script: {instanceID: 13074}
+      Script: {instanceID: 13078}
     - Class: 114
-      Script: {instanceID: 13080}
+      Script: {instanceID: 13102}
     - Class: 114
-      Script: {instanceID: 13104}
+      Script: {instanceID: 13272}
     - Class: 114
-      Script: {instanceID: 13274}
+      Script: {instanceID: 13532}
     - Class: 114
-      Script: {instanceID: 13534}
-    - Class: 114
-      Script: {instanceID: 13572}
+      Script: {instanceID: 13570}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -318,7 +315,7 @@ ScriptsOnlyBuild:
     className: Mask
   - hash:
       serializedVersion: 2
-      Hash: 5e7e54e03a26315dd28cded4cdcd5d69
+      Hash: f865174e46ec5a6d3e338f0e70241a08
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: CommandLine
@@ -384,7 +381,7 @@ ScriptsOnlyBuild:
     className: NetworkTransform
   - hash:
       serializedVersion: 2
-      Hash: 5dbcefd6db6de8c600620c90c0276078
+      Hash: 27dca5191f7d43bd98f8f832cddc952f
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyManagerServer
@@ -552,13 +549,7 @@ ScriptsOnlyBuild:
     className: ShowAmmo
   - hash:
       serializedVersion: 2
-      Hash: 158d9ef1ae0368fb7f2e23faa1c02dd6
-    assemblyName: Assembly-CSharp.dll
-    namespaceName: 
-    className: NetTest
-  - hash:
-      serializedVersion: 2
-      Hash: 92388acf1dc8621ee22d74e56f8d2ac0
+      Hash: f0c5d92cf08da53cb423da3a00bec440
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: LobbyManagerClient

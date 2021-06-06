@@ -28,9 +28,4 @@ public class Maps : MonoBehaviour
         foreach (Map m in this.maps) if (m.availableMode.Contains(mode)) maps.Add(m);
         return maps;
     }
-
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject);
-    }
 }

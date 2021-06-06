@@ -51,8 +51,8 @@ public class ShowAmmo : MonoBehaviour
         {
             Transform child = repTrn.GetChild(i);
             Transform fill = child.GetChild(0);
-            Alpha.Off(child.gameObject, 2, true);
-            Alpha.Off(fill.gameObject, 2, true);
+            Alpha.Off(child.gameObject, 2, 255, 0, true);
+            Alpha.Off(fill.gameObject, 2, 255, 0, true);
         }
     }
 }

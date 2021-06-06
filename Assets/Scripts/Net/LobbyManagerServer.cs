@@ -41,6 +41,8 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] private List<Player> team2;
     [SerializeField] private Player newPlayer;
     [SerializeField] private ulong lobbyID;
+    [SerializeField] private List<ulong> isReady;
+    [SerializeField] private bool ready;
     [Header("Match")]
     [SerializeField] private string mode;
     [SerializeField] private string map;
@@ -50,13 +52,25 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] private LobbyManagerClient LMC;
     [SerializeField] private NetworkManager netMan;
 
-    public ClientRpcParams SendToLobby()
+    public IEnumerator Start()
+    {
+        Debug.Log("Server: Start");
+        LMC.StartClientRpc(3);
+        yield return new WaitForSeconds(1);
+        LMC.StartClientRpc(2);
+        yield return new WaitForSeconds(1);
+        LMC.StartClientRpc(1);
+        yield return new WaitForSeconds(1);
+        LMC.StartClientRpc(0);
+    }
+
+    public ClientRpcParams SendTo(ulong id)
     {
         return new ClientRpcParams()
         {
             Send = new ClientRpcSendParams
             {
-                TargetClientIds = new ulong[] { lobbyID }
+                TargetClientIds = new ulong[] { id}
             }
         };
     }
@@ -78,8 +92,8 @@ public class LobbyManagerServer : NetworkBehaviour
         Debug.Log("Server: OnConnected " + id);
         if (team1.Count <= team2.Count) team1.Add(newPlayer);
         else team2.Add(newPlayer);
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     public void OnDisconnected(ulong id)
@@ -90,6 +104,7 @@ public class LobbyManagerServer : NetworkBehaviour
         foreach (Player p in team2) if (p.id == id) player = p;
         team1.Remove(player);
         team2.Remove(player);
+        isReady.Remove(id);
         if(team1.Count > 0) // Ужас
         {
             player = team1[0];
@@ -104,8 +119,8 @@ public class LobbyManagerServer : NetworkBehaviour
             lobbyID = player.id;
             team2[0] = player;
         }
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     public void AddCallbacks()
@@ -135,8 +150,8 @@ public class LobbyManagerServer : NetworkBehaviour
             team2.Remove(player);
             team1.Add(player);
         }
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -148,8 +163,8 @@ public class LobbyManagerServer : NetworkBehaviour
         if (index > modes.Count - 1) index = 0;
         mode = modes[index];
         if (!maps.GetMap(map).availableMode.Contains(mode)) map = maps.GetMaps(mode)[0].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -161,8 +176,8 @@ public class LobbyManagerServer : NetworkBehaviour
         if (index < 0) index = modes.Count - 1;
         mode = modes[index];
         if (!maps.GetMap(map).availableMode.Contains(mode)) map = maps.GetMaps(mode)[0].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -174,8 +189,8 @@ public class LobbyManagerServer : NetworkBehaviour
         int index = maps.IndexOf(this.maps.GetMap(map)) + 1;
         if (index > maps.Count - 1) index = 0;
         map = maps[index].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     [ServerRpc(RequireOwnership = false)]
@@ -187,14 +202,33 @@ public class LobbyManagerServer : NetworkBehaviour
         int index = maps.IndexOf(this.maps.GetMap(map)) - 1;
         if (index < 0) index = maps.Count - 1;
         map = maps[index].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map);
-        LMC.ActivateLobbyButtonsClientRpc(SendToLobby());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void KickServerRpc(ulong id, ulong clientId)
     {
         Debug.Log("Server: KickServerRpc");
+        if (id != lobbyID) return;
         NetworkManager.DisconnectClient(clientId);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void ReadyServerRpc(ulong id)
+    {
+        Debug.Log("Server: ReadyServerRpc");
+        if (isReady.Contains(id)) isReady.Remove(id);
+        else isReady.Add(id);
+        if (isReady.Count == team1.Count + team2.Count) { StartCoroutine(Start()); ready = true; }
+        else if (ready == true) { StopAllCoroutines(); ready = false; LMC.StartClientRpc(4); }
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
+    }
+
+    public void TempStartServer()
+    {
+        netMan.StartServer();
+        AddCallbacks();
     }
 }
