@@ -1,13 +1,16 @@
 # Unity
-Logs
-Temp
-Assets/Saves
-Assets/Saves.meta
+[Ll]ibrary
+[Ll]ogs
+[Oo]bj
+[Tt]emp
 
 # Visual Studio
 .vs
-obj
 
 # Sublime
 *.sublime-project
 *.sublime-workspace
+
+# Saves
+Assets/Saves
+Assets/Saves.meta
