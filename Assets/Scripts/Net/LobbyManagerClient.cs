@@ -14,7 +14,7 @@ public class LobbyManagerClient : NetworkBehaviour
     [SerializeField] private Text port;
     [SerializeField] private Image[] slot;
     [SerializeField] private List<Item> item;
-    [SerializeField] private GameObject itemPref;
+    [SerializeField] private GameObject itemPrefab;
     [SerializeField] private Image map;
     [SerializeField] private Text mapName;
     [SerializeField] private Text mode;
@@ -23,9 +23,12 @@ public class LobbyManagerClient : NetworkBehaviour
     [SerializeField] private GameObject[] conImg;
     [SerializeField] private GameObject strBG;
     [SerializeField] private Text strTxt;
+    [SerializeField] private Transform repeate;
+    [SerializeField] private int msgAmount;
     [Header("Scripts")]
     [SerializeField] private Maps maps;
     [SerializeField] private LobbyManagerServer LMS;
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private NetworkManager netMan;
     [SerializeField] private UNetTransport uNetTransport;
     [Header("Temp")]
@@ -46,22 +49,22 @@ public class LobbyManagerClient : NetworkBehaviour
         }
     }
 
-    public void AddItem(Player player, ulong[] isReady, int i)
+    public void AddItem(Player player, ulong[] ready, int i)
     {
-        Item newItem = Instantiate(itemPref, slot[i].transform).GetComponent<Item>();
+        Item newItem = Instantiate(itemPrefab, slot[i].transform).GetComponent<Item>();
         newItem.name.text = player.name;
         newItem.desc.text = player.desc;
         newItem.head.color = player.color;
         newItem.kick.onClick.AddListener(delegate { LMS.KickServerRpc(NetworkManager.LocalClientId, player.id); });
-        List<ulong> ready = new List<ulong>();
-        foreach (ulong id in isReady) ready.Add(id);
-        if (ready.Contains(player.id)) newItem.desc.text = "Ready!";
+        List<ulong> readyList = new List<ulong>();
+        foreach (ulong id in ready) readyList.Add(id);
+        if (readyList.Contains(player.id)) newItem.desc.text = "Ready!";
         if (player.isLobby) newItem.lobby.SetActive(true);
         item.Add(newItem);
     }
 
     [ClientRpc]
-    public void UpdateClientRpc(Player[] team1, Player[] team2, string mode, string map, ulong[] isReady, ClientRpcParams CRP = default)
+    public void UpdateClientRpc(Player[] team1, Player[] team2, string mode, string map, ulong[] ready, ClientRpcParams CRP = default)
     {
         Debug.Log("Client: UpdateClientRpc");
         foreach (Item i in item.ToArray()) Destroy(i.gameObject);
@@ -74,8 +77,8 @@ public class LobbyManagerClient : NetworkBehaviour
             if (mode != "Bots attack") slot[i + 5].color = Color.blue;
             else slot[i + 5].color = Color.green;
         }
-        for (int i = 0; i < team1.Length; i++) AddItem(team1[i], isReady, i);
-        for (int i = 0; i < team2.Length; i++) AddItem(team2[i], isReady, i + 5);
+        for (int i = 0; i < team1.Length; i++) AddItem(team1[i], ready, i);
+        for (int i = 0; i < team2.Length; i++) AddItem(team2[i], ready, i + 5);
         foreach (Button b in match) b.interactable = false;
         this.mode.text = mode;
         this.map.sprite = maps.GetMap(map).image;
@@ -91,26 +94,50 @@ public class LobbyManagerClient : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void StartClientRpc(int sec, ClientRpcParams CRP = default)
+    public void StartClientRpc(int sec, string map = null, ClientRpcParams CRP = default)
     {
-        if(sec == 4)
+        Debug.Log("Client: StartClientRpc");
+        if (sec == 4)
         {
             Alpha.Off(strBG, 1, 128, 0, false, true, false);
             Alpha.Off(strTxt.gameObject, 1, 255, 0, false, true, false);
             return;
         }
-        if(sec == 3)
+        if (sec == 3)
         {
             Alpha.On(strBG, 1, 0, 128, false, true, true);
             Alpha.On(strTxt.gameObject, 1, 0, 255, false, true, true);
         }
+        if (sec == 0)
+        {
+            sceneLoader.Load(maps.GetMap(map).scene);
+        }
         strTxt.text = sec.ToString();
+    }
+
+    [ClientRpc]
+    public void SendClientRpc(string name, string msg)
+    {
+        Debug.Log("Client: SendClientRpc");
+        msgAmount++;
+        Transform instantiate = Instantiate(repeate.GetChild(0), repeate);
+        instantiate.Translate(0, -.3f * (msgAmount), 0);
+        instantiate.GetComponent<Text>().text = name + ": " + msg;
+        repeate.Translate(0, .3f, 0);
+        if (repeate.childCount > 5)  Alpha.Off(repeate.GetChild(repeate.childCount - 5).gameObject, 1, 255, 0, true);
     }
     
     public void OnDisconnect(ulong id = 0)
     {
         Debug.Log("Client: OnDisconnect");
+        if (LMS.isStart) return;
         ChangeConnectionAlpha(true);
+
+        if(strBG.GetComponent<Image>().color.a > 0)
+        {
+            Alpha.Off(strBG, 1, 128, 0, false, true, false);
+            Alpha.Off(strTxt.gameObject, 1, 255, 0, false, true, false);
+        }
     }
 
     public void Connect()
@@ -131,7 +158,7 @@ public class LobbyManagerClient : NetworkBehaviour
     public void ChangeIP(string ip)
     {
         Debug.Log("Client: ChangeIP");
-        uNetTransport.ConnectAddress = ip;
+        if (ip.Length > 0) uNetTransport.ConnectAddress = ip;
     }
 
     public void ChangePort(string port)
@@ -174,6 +201,12 @@ public class LobbyManagerClient : NetworkBehaviour
     {
         Debug.Log("Client: Ready");
         LMS.ReadyServerRpc(NetworkManager.LocalClientId);
+    }
+
+    public void Send(string msg)
+    {
+        Debug.Log("Client: Send");
+        if (msg.Length > 0) LMS.SendServerRpc(NetworkManager.LocalClientId, msg);
     }
 
     void Start()

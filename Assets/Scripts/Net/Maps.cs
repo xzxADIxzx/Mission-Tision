@@ -10,6 +10,7 @@ public struct Map
     public string scene;
     public Sprite image;
     public List<string> availableMode;
+    public Vector3[] spanwPoint;
 }
 
 public class Maps : MonoBehaviour

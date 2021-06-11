@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -10,7 +11,7 @@ public static class Alpha
 		return new Color(color.r, color.g, color.b, Alpha255 / 255);
 	}
 
-    public static async void On(GameObject image, int delay = 1, int sA = 0, int eA = 255, bool destroy = false, bool sActive = true, bool eActive = true)
+    public static async void On(GameObject image, int delay = 1, int sA = 0, int eA = 255, bool destroy = false, bool sActive = true, bool eActive = true, Action callback = null)
     {
         image.SetActive(sActive);
         float time = Time.time * 1000;
@@ -32,9 +33,10 @@ public static class Alpha
         image.SetActive(eActive);
         if (destroy)
             MonoBehaviour.Destroy(image);
+        callback?.Invoke();
     }
 
-    public static async void Off(GameObject image, int delay = 1, int sA = 255, int eA = 0, bool destroy = false, bool sActive = true, bool eActive = true)
+    public static async void Off(GameObject image, int delay = 1, int sA = 255, int eA = 0, bool destroy = false, bool sActive = true, bool eActive = true, Action callback = null)
     {
         image.SetActive(sActive);
         float time = Time.time * 1000;
@@ -56,5 +58,6 @@ public static class Alpha
         image.SetActive(eActive);
         if (destroy)
             MonoBehaviour.Destroy(image);
+        callback?.Invoke();
     }
 }

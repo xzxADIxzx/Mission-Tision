@@ -70,7 +70,10 @@
     <Compile Include="Assets\Scripts\Net\LobbyManagerClient.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerServer.cs" />
     <Compile Include="Assets\Scripts\Net\Maps.cs" />
+    <Compile Include="Assets\Scripts\Net\MatchManagerServer.cs" />
+    <Compile Include="Assets\Scripts\PlayerContoller.cs" />
     <Compile Include="Assets\Scripts\Repeate.cs" />
+    <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Settings\Settings.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsClear.cs" />
     <Compile Include="Assets\Scripts\Settings\SettingsControl.cs" />

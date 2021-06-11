@@ -41,18 +41,23 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] private List<Player> team2;
     [SerializeField] private Player newPlayer;
     [SerializeField] private ulong lobbyID;
-    [SerializeField] private List<ulong> isReady;
-    [SerializeField] private bool ready;
+    [SerializeField] private List<ulong> ready;
     [Header("Match")]
     [SerializeField] private string mode;
     [SerializeField] private string map;
     [SerializeField] private List<string> modes;
+    [SerializeField] private GameObject MMPrefab;
+    [Header("Status")]
+    [SerializeField] public bool isReady;
+    [SerializeField] public bool isStart;
     [Header("Scripts")]
     [SerializeField] private Maps maps;
     [SerializeField] private LobbyManagerClient LMC;
+    [SerializeField] private MatchManagerServer MMS;
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private NetworkManager netMan;
 
-    public IEnumerator Start()
+    public IEnumerator StartMatch()
     {
         Debug.Log("Server: Start");
         LMC.StartClientRpc(3);
@@ -61,7 +66,11 @@ public class LobbyManagerServer : NetworkBehaviour
         yield return new WaitForSeconds(1);
         LMC.StartClientRpc(1);
         yield return new WaitForSeconds(1);
-        LMC.StartClientRpc(0);
+        LMC.StartClientRpc(0, this.map);
+        Map map = maps.GetMap(this.map);
+        Action callback = delegate { Instantiate(MMPrefab).GetComponent<MatchManagerServer>().Init(team1.ToArray(), team2.ToArray(), mode, map.spanwPoint); };
+        sceneLoader.Load(map.scene, callback);
+        isStart = true;
     }
 
     public ClientRpcParams SendTo(ulong id)
@@ -75,16 +84,24 @@ public class LobbyManagerServer : NetworkBehaviour
         };
     }
 
+    public Player GetPlayer(ulong id)
+    {
+        foreach (Player p in team1) if (p.id == id) return p;
+        foreach (Player p in team2) if (p.id == id) return p;
+        return new Player();
+    }
+
     public void Approve(byte[] data, ulong id, NetworkManager.ConnectionApprovedDelegate callback)
     {
-        Debug.Log("Server: Approve " + (team1.Count + team2.Count < 10));
+        bool approve = team1.Count + team2.Count < 10 && !isReady;
+        Debug.Log("Server: Approve " + approve);
         newPlayer = LMConvert.ToPlayer(data, id);
         if (NetworkManager.ConnectedClientsList.Count == 0)
         {
             newPlayer.isLobby = true;
             lobbyID = id;
         }
-        callback(false, null, team1.Count + team2.Count < 10, Vector3.zero, Quaternion.identity);
+        callback(false, null, approve, Vector3.zero, Quaternion.identity);
     }
 
     public void OnConnected(ulong id)
@@ -92,7 +109,7 @@ public class LobbyManagerServer : NetworkBehaviour
         Debug.Log("Server: OnConnected " + id);
         if (team1.Count <= team2.Count) team1.Add(newPlayer);
         else team2.Add(newPlayer);
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -104,7 +121,12 @@ public class LobbyManagerServer : NetworkBehaviour
         foreach (Player p in team2) if (p.id == id) player = p;
         team1.Remove(player);
         team2.Remove(player);
-        isReady.Remove(id);
+        ready.Remove(id);
+        if(team1.Count + team1.Count == 0)
+        {
+            StopAllCoroutines();
+            isReady = false;
+        }
         if(team1.Count > 0) // Ужас
         {
             player = team1[0];
@@ -119,7 +141,8 @@ public class LobbyManagerServer : NetworkBehaviour
             lobbyID = player.id;
             team2[0] = player;
         }
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        if (isStart) return; // Что бы во время матча он не попытался обновить интерфейс у клиента
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -150,7 +173,7 @@ public class LobbyManagerServer : NetworkBehaviour
             team2.Remove(player);
             team1.Add(player);
         }
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -163,7 +186,7 @@ public class LobbyManagerServer : NetworkBehaviour
         if (index > modes.Count - 1) index = 0;
         mode = modes[index];
         if (!maps.GetMap(map).availableMode.Contains(mode)) map = maps.GetMaps(mode)[0].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -176,7 +199,7 @@ public class LobbyManagerServer : NetworkBehaviour
         if (index < 0) index = modes.Count - 1;
         mode = modes[index];
         if (!maps.GetMap(map).availableMode.Contains(mode)) map = maps.GetMaps(mode)[0].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -189,7 +212,7 @@ public class LobbyManagerServer : NetworkBehaviour
         int index = maps.IndexOf(this.maps.GetMap(map)) + 1;
         if (index > maps.Count - 1) index = 0;
         map = maps[index].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -202,7 +225,7 @@ public class LobbyManagerServer : NetworkBehaviour
         int index = maps.IndexOf(this.maps.GetMap(map)) - 1;
         if (index < 0) index = maps.Count - 1;
         map = maps[index].name;
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
 
@@ -218,12 +241,19 @@ public class LobbyManagerServer : NetworkBehaviour
     public void ReadyServerRpc(ulong id)
     {
         Debug.Log("Server: ReadyServerRpc");
-        if (isReady.Contains(id)) isReady.Remove(id);
-        else isReady.Add(id);
-        if (isReady.Count == team1.Count + team2.Count) { StartCoroutine(Start()); ready = true; }
-        else if (ready == true) { StopAllCoroutines(); ready = false; LMC.StartClientRpc(4); }
-        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, isReady.ToArray());
+        if (ready.Contains(id)) ready.Remove(id);
+        else ready.Add(id);
+        if (ready.Count == team1.Count + team2.Count) { StartCoroutine(StartMatch()); isReady = true; }
+        else if (isReady == true) { StopAllCoroutines(); isReady = false; LMC.StartClientRpc(4); }
+        LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SendServerRpc(ulong id, string msg)
+    {
+        Debug.Log("Server: SendServerRpc");
+        LMC.SendClientRpc(GetPlayer(id).name, msg);
     }
 
     public void TempStartServer()

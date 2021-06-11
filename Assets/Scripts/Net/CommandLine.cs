@@ -20,7 +20,6 @@ public class CommandLine : MonoBehaviour
         {
             netMan.StartServer();
             LMS.AddCallbacks();
-            Camera.main.gameObject.SetActive(false);
         }
     }
 }
