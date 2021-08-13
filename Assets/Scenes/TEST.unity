@@ -782,9 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d36a6b344c7275445bd25f9812ab569c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LMS: {fileID: 363355106}
-  netMan: {fileID: 231970375}
-  uNetTransport: {fileID: 231970374}
 --- !u!1 &257766374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1272,7 +1269,6 @@ MonoBehaviour:
   MMPrefab: {fileID: 414499776690706611, guid: 01453c69ac23b464eb022163024bcda1, type: 3}
   isReady: 0
   isStart: 0
-  maps: {fileID: 363355110}
   LMC: {fileID: 363355109}
   MMS: {fileID: 0}
   sceneLoader: {fileID: 835284136}
@@ -1320,6 +1316,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a40f1c3535eef4380639651176292b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ui: {fileID: 0}
   IP: {fileID: 1785995615}
   port: {fileID: 1369562939}
   slot:
@@ -1359,11 +1356,16 @@ MonoBehaviour:
   strTxt: {fileID: 1038921097}
   repeate: {fileID: 901683567}
   msgAmount: 0
-  maps: {fileID: 363355110}
+  size: 0
   LMS: {fileID: 363355106}
   sceneLoader: {fileID: 835284136}
   netMan: {fileID: 231970375}
   uNetTransport: {fileID: 231970374}
+  MP: {fileID: 0}
+  MPImg: {fileID: 0}
+  MPName: {fileID: 0}
+  MPDesc: {fileID: 0}
+  point: []
   pname: {fileID: 356025217}
   pdesc: {fileID: 1097941633}
 --- !u!114 &363355110
@@ -1380,6 +1382,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maps:
   - name: Forest
+    desc: 
     scene: forest
     image: {fileID: 21300000, guid: 39c3f656f083d044097bf1108821bc57, type: 3}
     availableMode:
@@ -1397,6 +1400,7 @@ MonoBehaviour:
     - {x: 8, y: -2, z: 0}
     - {x: 8, y: -4, z: 0}
   - name: Office
+    desc: 
     scene: office
     image: {fileID: 21300000, guid: 043858dce348b7d49b5f2605d018da06, type: 3}
     availableMode:
@@ -5586,6 +5590,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Lobby Manager UI
+      objectReference: {fileID: 0}
+    - target: {fileID: 1358001223530067729, guid: e22142a2710ca3043b80a96037d25bf7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2003852812494847306, guid: e22142a2710ca3043b80a96037d25bf7,
         type: 3}

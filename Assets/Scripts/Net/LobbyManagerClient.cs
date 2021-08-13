@@ -10,6 +10,7 @@ using MLAPI.Transports.UNET;
 public class LobbyManagerClient : NetworkBehaviour
 {
     [Header("UI")]
+    [SerializeField] private GameObject ui;
     [SerializeField] private Text IP;
     [SerializeField] private Text port;
     [SerializeField] private Image[] slot;
@@ -25,12 +26,18 @@ public class LobbyManagerClient : NetworkBehaviour
     [SerializeField] private Text strTxt;
     [SerializeField] private Transform repeate;
     [SerializeField] private int msgAmount;
+    [SerializeField] private float size;
     [Header("Scripts")]
-    [SerializeField] private Maps maps;
     [SerializeField] private LobbyManagerServer LMS;
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private NetworkManager netMan;
     [SerializeField] private UNetTransport uNetTransport;
+    [Header("Map Preview")]
+    [SerializeField] private GameObject MP;
+    [SerializeField] private Image MPImg;
+    [SerializeField] private Text MPName;
+    [SerializeField] private Text MPDesc;
+    [SerializeField] private Image[] point;
     [Header("Temp")]
     [SerializeField] private Text pname;
     [SerializeField] private Text pdesc;
@@ -81,8 +88,8 @@ public class LobbyManagerClient : NetworkBehaviour
         for (int i = 0; i < team2.Length; i++) AddItem(team2[i], ready, i + 5);
         foreach (Button b in match) b.interactable = false;
         this.mode.text = mode;
-        this.map.sprite = maps.GetMap(map).image;
-        this.mapName.text = maps.GetMap(map).name;
+        this.map.sprite = GlobalManager.sin.MAP.GetMap(map).image;
+        this.mapName.text = GlobalManager.sin.MAP.GetMap(map).name;
     }
 
     [ClientRpc]
@@ -94,7 +101,7 @@ public class LobbyManagerClient : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void StartClientRpc(int sec, string map = null, ClientRpcParams CRP = default)
+    public void StartClientRpc(int sec, string map = null, string mode = null, ClientRpcParams CRP = default)
     {
         Debug.Log("Client: StartClientRpc");
         if (sec == 4)
@@ -110,9 +117,31 @@ public class LobbyManagerClient : NetworkBehaviour
         }
         if (sec == 0)
         {
-            sceneLoader.Load(maps.GetMap(map).scene);
+            Action callback = delegate 
+            {
+                ui.SetActive(false);
+                MP.SetActive(true);
+
+                Map m = GlobalManager.sin.MAP.GetMap(map);
+                MPName.text = m.name;
+                MPImg.sprite = m.image;
+                MPDesc.text = GlobalManager.sin.MAP.GetMode(mode).desc;
+
+                GlobalManager.sin.LMS.LoadedServerRpc(GlobalManager.sin.NTM.LocalClientId);
+            };
+            sceneLoader.Load(GlobalManager.sin.MAP.GetMap(map).scene, callback);
         }
         strTxt.text = sec.ToString();
+    }
+
+    [ClientRpc]
+    public void UpdatePreviewClientRpc(bool[] team1, bool[] team2, ClientRpcParams CRP = default)
+    {
+        Debug.Log("Client: UpdatePreviewClientRpc");
+        Color red = new Color(1, 0, 0);
+        Color green = new Color(0, 1, 0);
+        for (int i = 0; i < team1.Length; i++) point[i].color = team1[i] ? green : red;
+        for (int i = 0; i < team2.Length; i++) point[i + 5].color = team2[i] ? green : red;
     }
 
     [ClientRpc]
@@ -121,9 +150,9 @@ public class LobbyManagerClient : NetworkBehaviour
         Debug.Log("Client: SendClientRpc");
         msgAmount++;
         Transform instantiate = Instantiate(repeate.GetChild(0), repeate);
-        instantiate.Translate(0, -.3f * (msgAmount), 0);
+        instantiate.Translate(0, -12f * msgAmount * size, 0);
         instantiate.GetComponent<Text>().text = name + ": " + msg;
-        repeate.Translate(0, .3f, 0);
+        repeate.Translate(0, 12f * size, 0);
         if (repeate.childCount > 5)  Alpha.Off(repeate.GetChild(repeate.childCount - 5).gameObject, 1, 255, 0, true);
     }
     
@@ -212,6 +241,6 @@ public class LobbyManagerClient : NetworkBehaviour
     void Start()
     {
         netMan.OnClientDisconnectCallback += OnDisconnect;
-        DontDestroyOnLoad(gameObject);
+        size = GlobalManager.sin.LMO.transform.GetChild(0).localScale.y;
     }
 }

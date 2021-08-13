@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] Image fill;
     [SerializeField] GameObject[] image;
 
-    IEnumerator Loading(string scene, Action callback)
+    public IEnumerator Loading(string scene, Action callback)
     {
         AsyncOperation operation = SceneManager.LoadSceneAsync(scene);
         operation.allowSceneActivation = false;
@@ -33,18 +34,5 @@ public class SceneLoader : MonoBehaviour
         foreach (GameObject obj in image) Alpha.On(obj, 1, 0, 255, false, true, true);
         Alpha.On(fill.gameObject, 1, 0, 255, false, true, true, delegate { StartCoroutine(Loading(scene, callback)); });
         fill.fillAmount = 0;
-    }
-
-    void Start()
-    {
-        //StartCoroutine(Loading("TEST", null)); Потом добавлю сцену (Start) в которой будет только SceneLoader
-        foreach (GameObject obj in image) Alpha.Off(obj, 1, 255, 0, false, true, false);
-        Alpha.Off(fill.gameObject, 1, 255, 0, false, true, false);
-        DontDestroyOnLoad(gameObject);
-    }
-
-    public void TestLoad(string scene)
-    {
-        Load(scene);
     }
 }

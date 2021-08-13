@@ -65,12 +65,13 @@
     <Compile Include="Assets\Scripts\Alpha.cs" />
     <Compile Include="Assets\Scripts\DollManager.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
-    <Compile Include="Assets\Scripts\Net\CommandLine.cs" />
+    <Compile Include="Assets\Scripts\GlobalManager.cs" />
     <Compile Include="Assets\Scripts\Net\LMConvert.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerClient.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerServer.cs" />
     <Compile Include="Assets\Scripts\Net\Maps.cs" />
     <Compile Include="Assets\Scripts\Net\MatchManagerServer.cs" />
+    <Compile Include="Assets\Scripts\Net\ServerStartup.cs" />
     <Compile Include="Assets\Scripts\PlayerContoller.cs" />
     <Compile Include="Assets\Scripts\Repeate.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
