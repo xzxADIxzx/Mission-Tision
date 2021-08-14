@@ -53,6 +53,7 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] public bool isReady;
     [SerializeField] public bool isStart;
     [SerializeField] public bool isLoad;
+    [SerializeField] public bool isClientLoad;
     [Header("Scripts")]
     [SerializeField] private LobbyManagerClient LMC;
     [SerializeField] private MatchManagerServer MMS;
@@ -70,11 +71,25 @@ public class LobbyManagerServer : NetworkBehaviour
         yield return new WaitForSeconds(1);
         LMC.StartClientRpc(0, this.map, mode);
         Map map = GlobalManager.sin.MAP.GetMap(this.map);
-        Action callback = delegate {
-            Instantiate(MMPrefab).GetComponent<MatchManagerServer>().Init(team1.ToArray(), team2.ToArray(), mode, map.spanwPoint);
-        };
-        sceneLoader.Load(map.scene, callback);
+        sceneLoader.Load(map.scene, delegate { isLoad = true; StartCoroutine(WaitForLoad()); });
         isStart = true;
+    }
+
+    public IEnumerator WaitForLoad()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            if (isLoad && isClientLoad) break;
+            yield return new WaitForSeconds(3);
+        }
+        if (!isLoad)
+        {
+            // Your Server is too slow...
+            foreach (Player p in team1) GlobalManager.sin.NTM.DisconnectClient(p.id);
+            foreach (Player p in team2) GlobalManager.sin.NTM.DisconnectClient(p.id);
+        }
+
+        // Some Code for Init Match...
     }
 
     public ClientRpcParams SendTo(ulong id)
@@ -280,6 +295,6 @@ public class LobbyManagerServer : NetworkBehaviour
         bool load = true;
         foreach (bool l in t1) { if (!l) load = false; break; }
         foreach (bool l in t2) { if (!l) load = false; break; }
-        isLoad = load;
+        isClientLoad = load;
     }
 }
