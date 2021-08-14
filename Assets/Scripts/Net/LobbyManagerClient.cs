@@ -88,8 +88,8 @@ public class LobbyManagerClient : NetworkBehaviour
         for (int i = 0; i < team2.Length; i++) AddItem(team2[i], ready, i + 5);
         foreach (Button b in match) b.interactable = false;
         this.mode.text = mode;
-        this.map.sprite = GlobalManager.sin.MAP.GetMap(map).image;
-        this.mapName.text = GlobalManager.sin.MAP.GetMap(map).name;
+        this.map.sprite = Vars.sin.MAP.GetMap(map).image;
+        this.mapName.text = Vars.sin.MAP.GetMap(map).name;
     }
 
     [ClientRpc]
@@ -122,14 +122,14 @@ public class LobbyManagerClient : NetworkBehaviour
                 ui.SetActive(false);
                 MP.SetActive(true);
 
-                Map m = GlobalManager.sin.MAP.GetMap(map);
+                Map m = Vars.sin.MAP.GetMap(map);
                 MPName.text = m.name;
                 MPImg.sprite = m.image;
-                MPDesc.text = GlobalManager.sin.MAP.GetMode(mode).desc;
+                MPDesc.text = Vars.sin.MAP.GetMode(mode).desc;
 
-                GlobalManager.sin.LMS.LoadedServerRpc(GlobalManager.sin.NTM.LocalClientId);
+                Vars.sin.LMS.LoadedServerRpc(Vars.sin.NTM.LocalClientId);
             };
-            sceneLoader.Load(GlobalManager.sin.MAP.GetMap(map).scene, callback);
+            sceneLoader.Load(Vars.sin.MAP.GetMap(map).scene, callback);
         }
         strTxt.text = sec.ToString();
     }
@@ -241,6 +241,6 @@ public class LobbyManagerClient : NetworkBehaviour
     void Start()
     {
         netMan.OnClientDisconnectCallback += OnDisconnect;
-        size = GlobalManager.sin.LMO.transform.GetChild(0).localScale.y;
+        size = Vars.sin.LMO.transform.GetChild(0).localScale.y;
     }
 }

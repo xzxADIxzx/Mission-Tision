@@ -2133,7 +2133,7 @@ GameObject:
   - component: {fileID: 1152404791}
   - component: {fileID: 1152404790}
   m_Layer: 0
-  m_Name: Global Manager
+  m_Name: Vars
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3482,6 +3482,7 @@ MonoBehaviour:
   isReady: 0
   isStart: 0
   isLoad: 0
+  isClientLoad: 0
   LMC: {fileID: 4740096159808437393}
   MMS: {fileID: 0}
   sceneLoader: {fileID: 1432880551}

@@ -19,7 +19,7 @@ public class MatchManagerServer : NetworkBehaviour
 
     public async void Init(Player[] team1, Player[] team2, string mode, Vector3[] spawnPoint)
     {
-        await Task.Delay(1);
+        await Task.Delay(1); // why? I don`t remeber...
         Debug.Log("Server: Init");
         this.team1 = team1;
         this.team2 = team2;

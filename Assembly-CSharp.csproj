@@ -65,7 +65,6 @@
     <Compile Include="Assets\Scripts\Alpha.cs" />
     <Compile Include="Assets\Scripts\DollManager.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
-    <Compile Include="Assets\Scripts\GlobalManager.cs" />
     <Compile Include="Assets\Scripts\Net\LMConvert.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerClient.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerServer.cs" />
@@ -86,6 +85,7 @@
     <Compile Include="Assets\Scripts\TrashObj.cs" />
     <Compile Include="Assets\Scripts\UI\Item.cs" />
     <Compile Include="Assets\Scripts\UI\ShowAmmo.cs" />
+    <Compile Include="Assets\Scripts\Vars.cs" />
     <Compile Include="Assets\Scripts\Weapon.cs" />
     <Compile Include="Assets\Scripts\WeaponManager.cs" />
     <None Include="Assets\Animations\Это просто для того что бы GitHub загрузил папки на репозиторий.txt" />

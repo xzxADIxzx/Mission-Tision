@@ -70,7 +70,7 @@ public class LobbyManagerServer : NetworkBehaviour
         LMC.StartClientRpc(1);
         yield return new WaitForSeconds(1);
         LMC.StartClientRpc(0, this.map, mode);
-        Map map = GlobalManager.sin.MAP.GetMap(this.map);
+        Map map = Vars.sin.MAP.GetMap(this.map);
         sceneLoader.Load(map.scene, delegate { isLoad = true; StartCoroutine(WaitForLoad()); });
         isStart = true;
     }
@@ -85,8 +85,8 @@ public class LobbyManagerServer : NetworkBehaviour
         if (!isLoad)
         {
             // Your Server is too slow...
-            foreach (Player p in team1) GlobalManager.sin.NTM.DisconnectClient(p.id);
-            foreach (Player p in team2) GlobalManager.sin.NTM.DisconnectClient(p.id);
+            foreach (Player p in team1) Vars.sin.NTM.DisconnectClient(p.id);
+            foreach (Player p in team2) Vars.sin.NTM.DisconnectClient(p.id);
         }
 
         // Some Code for Init Match...
@@ -204,7 +204,7 @@ public class LobbyManagerServer : NetworkBehaviour
         int index = modes.IndexOf(mode) + 1;
         if (index > modes.Count - 1) index = 0;
         mode = modes[index];
-        if (!GlobalManager.sin.MAP.GetMap(map).availableMode.Contains(mode)) map = GlobalManager.sin.MAP.GetMaps(mode)[0].name;
+        if (!Vars.sin.MAP.GetMap(map).availableMode.Contains(mode)) map = Vars.sin.MAP.GetMaps(mode)[0].name;
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
@@ -217,7 +217,7 @@ public class LobbyManagerServer : NetworkBehaviour
         int index = modes.IndexOf(mode) - 1;
         if (index < 0) index = modes.Count - 1;
         mode = modes[index];
-        if (!GlobalManager.sin.MAP.GetMap(map).availableMode.Contains(mode)) map = GlobalManager.sin.MAP.GetMaps(mode)[0].name;
+        if (!Vars.sin.MAP.GetMap(map).availableMode.Contains(mode)) map = Vars.sin.MAP.GetMaps(mode)[0].name;
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
         LMC.ActivateLobbyButtonsClientRpc(SendTo(lobbyID));
     }
@@ -227,8 +227,8 @@ public class LobbyManagerServer : NetworkBehaviour
     {
         Debug.Log("Server: NextMapServerRpc");
         if (id != lobbyID) return;
-        List<Map> maps = GlobalManager.sin.MAP.GetMaps(mode);
-        int index = maps.IndexOf(GlobalManager.sin.MAP.GetMap(map)) + 1;
+        List<Map> maps = Vars.sin.MAP.GetMaps(mode);
+        int index = maps.IndexOf(Vars.sin.MAP.GetMap(map)) + 1;
         if (index > maps.Count - 1) index = 0;
         map = maps[index].name;
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
@@ -240,8 +240,8 @@ public class LobbyManagerServer : NetworkBehaviour
     {
         Debug.Log("Server: PrevMapServerRpc");
         if (id != lobbyID) return;
-        List<Map> maps = GlobalManager.sin.MAP.GetMaps(mode);
-        int index = maps.IndexOf(GlobalManager.sin.MAP.GetMap(map)) - 1;
+        List<Map> maps = Vars.sin.MAP.GetMaps(mode);
+        int index = maps.IndexOf(Vars.sin.MAP.GetMap(map)) - 1;
         if (index < 0) index = maps.Count - 1;
         map = maps[index].name;
         LMC.UpdateClientRpc(team1.ToArray(), team2.ToArray(), mode, map, ready.ToArray());
@@ -290,7 +290,7 @@ public class LobbyManagerServer : NetworkBehaviour
 
         bool[] t1 = team1.ConvertAll(new Converter<Player, bool>(delegate(Player p) { return p.isLoad; })).ToArray();
         bool[] t2 = team2.ConvertAll(new Converter<Player, bool>(delegate(Player p) { return p.isLoad; })).ToArray();
-        GlobalManager.sin.LMC.UpdatePreviewClientRpc(t1, t2);
+        Vars.sin.LMC.UpdatePreviewClientRpc(t1, t2);
 
         bool load = true;
         foreach (bool l in t1) { if (!l) load = false; break; }

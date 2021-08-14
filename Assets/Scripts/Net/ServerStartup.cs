@@ -12,16 +12,16 @@ public class ServerStartup : MonoBehaviour
         if (args[1] == "-server")
         {
             if (args.Length > 2)
-                GlobalManager.sin.UNT.ServerListenPort = Convert.ToInt32(args[2]);
+                Vars.sin.UNT.ServerListenPort = Convert.ToInt32(args[2]);
 
-            GlobalManager.sin.NTM.StartServer();
-            GlobalManager.sin.LMS.AddCallbacks();
+            Vars.sin.NTM.StartServer();
+            Vars.sin.LMS.AddCallbacks();
         }
     }
 
     public void StartTemp()
     {
-        GlobalManager.sin.NTM.StartServer();
-        GlobalManager.sin.LMS.AddCallbacks();
+        Vars.sin.NTM.StartServer();
+        Vars.sin.LMS.AddCallbacks();
     }
 }

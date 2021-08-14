@@ -4,10 +4,10 @@ using UnityEngine;
 using MLAPI;
 using MLAPI.Transports.UNET;
 
-public class GlobalManager : MonoBehaviour
+public class Vars : MonoBehaviour
 {
     [Header("Singleton")]
-    [SerializeField] public static GlobalManager sin;
+    [SerializeField] public static Vars sin;
     [Header("Managers")]
     [SerializeField] public NetworkManager NTM;
     [SerializeField] public UNetTransport UNT;
@@ -34,6 +34,7 @@ public class GlobalManager : MonoBehaviour
         DontDestroyOnLoad(SSO);
         DontDestroyOnLoad(MPO);
 
+        //Temp lobby
         SLD.StartCoroutine(SLD.Loading("lobby", delegate { LMO.SetActive(true); SSU.CheckArgs(); }));
     }
 }
