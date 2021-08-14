@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3169196510944174156
+--- !u!1 &3783911882478375671
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,117 +8,72 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6203979410249302627}
-  - component: {fileID: -2793389472337042609}
-  - component: {fileID: 4561316277759534361}
-  - component: {fileID: 5560286595702187182}
+  - component: {fileID: 5421027702020962255}
+  - component: {fileID: 941834303797685616}
+  - component: {fileID: 7545439957422243366}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player Doll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6203979410249302627
+--- !u!4 &5421027702020962255
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3169196510944174156}
+  m_GameObject: {fileID: 3783911882478375671}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 243945870416377236}
+  - {fileID: 6763994202613352679}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2793389472337042609
+--- !u!114 &941834303797685616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3169196510944174156}
+  m_GameObject: {fileID: 3783911882478375671}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa1b32637ad7fb7489e6dff54f0ef5d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 9e295224fd1cdb5469a72ac5ca47c5d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PCID: 0
-  MMS: {fileID: 0}
---- !u!114 &4561316277759534361
+  velocity: {x: 0, y: 0}
+  addFulc: 2
+  addMccm: 30
+  fulc: 0
+  mccm: 0
+--- !u!114 &7545439957422243366
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3169196510944174156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FixedSendsPerSecond: 50
-  AssumeSyncedSends: 1
-  InterpolatePosition: 1
-  SnapDistance: 10
-  InterpolateServer: 1
-  MinMeters: 0.1
-  MinDegrees: 1.5
-  ExtrapolatePosition: 0
-  MaxSendsToExtrapolate: 5
-  Channel: 
-  EnableRange: 0
-  EnableNonProvokedResendChecks: 0
-  DistanceSendrate:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 20
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 500
-      value: 20
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!114 &5560286595702187182
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3169196510944174156}
+  m_GameObject: {fileID: 3783911882478375671}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkInstanceId: 0
-  PrefabHash: 1897319656204293034
-  PrefabHashGenerator: Player
+  PrefabHash: 13136733237120545909
+  PrefabHashGenerator: Player Doll
   AlwaysReplicateAsRoot: 0
   DontDestroyWithOwner: 0
---- !u!1001 &4882718221501344453
+--- !u!1001 &2125353517923129270
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 6203979410249302627}
+    m_TransformParent: {fileID: 5421027702020962255}
     m_Modifications:
     - target: {fileID: 4656806815818669905, guid: 0e780c274afd64c4a94b3b769e7b1e48,
         type: 3}
@@ -182,9 +137,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0e780c274afd64c4a94b3b769e7b1e48, type: 3}
---- !u!4 &243945870416377236 stripped
+--- !u!4 &6763994202613352679 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4656806815818669905, guid: 0e780c274afd64c4a94b3b769e7b1e48,
     type: 3}
-  m_PrefabInstance: {fileID: 4882718221501344453}
+  m_PrefabInstance: {fileID: 2125353517923129270}
   m_PrefabAsset: {fileID: 0}

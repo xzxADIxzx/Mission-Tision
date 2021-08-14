@@ -8,58 +8,72 @@ using MLAPI.Messaging;
 public class MatchManagerServer : NetworkBehaviour
 {
     [Header("Match")]
-    [SerializeField] private Player[] team1;
-    [SerializeField] private Player[] team2;
-    [SerializeField] private List<PlayerContoller> team1Controller;
-    [SerializeField] private List<PlayerContoller> team2Controller;
-    [SerializeField] private string mode;
+    [SerializeField] private List<Player> team1;
+    [SerializeField] private List<Player> team2;
+    [SerializeField] private List<PlayerDoll> team1Doll;
+    [SerializeField] private List<PlayerDoll> team2Doll;
     [SerializeField] private Vector3[] spawnPoint;
+    [SerializeField] private string map;
+    [SerializeField] private string mode;
     [Header("Prefabs")]
     [SerializeField] private GameObject playerPrefab;
 
-    public async void Init(Player[] team1, Player[] team2, string mode, Vector3[] spawnPoint)
+    public void Init(List<Player> team1, List<Player> team2, string map, string mode)
     {
-        await Task.Delay(1); // why? I don`t remeber...
         Debug.Log("Server: Init");
         this.team1 = team1;
         this.team2 = team2;
+        this.map = map;
         this.mode = mode;
-        this.spawnPoint = spawnPoint;
+        this.spawnPoint = Vars.sin.MAP.GetMap(map).spanwPoint;
 
-        // Создаём игроков
-        for (int i = 0; i < team1.Length; i++)
+        // Create Players
+        for (int i = 0; i < team1.Count; i++)
         {
-            team1Controller.Add(Instantiate(playerPrefab, spawnPoint[i], Quaternion.identity).GetComponent<PlayerContoller>());
-            team1Controller[i].PCID = i;
+            team1Doll.Add(Instantiate(playerPrefab, spawnPoint[i], Quaternion.identity).GetComponent<PlayerDoll>());
+            team1Doll[i].PCID = i;
         }
-        for (int i = 0; i < team2.Length; i++)
+        for (int i = 0; i < team2.Count; i++)
         {
-            team2Controller.Add(Instantiate(playerPrefab, spawnPoint[i + 5], Quaternion.identity).GetComponent<PlayerContoller>());
-            team2Controller[i].PCID = i + 5;
+            team2Doll.Add(Instantiate(playerPrefab, spawnPoint[i + 5], Quaternion.identity).GetComponent<PlayerDoll>());
+            team2Doll[i].PCID = i + 5;
         }
-        foreach (PlayerContoller pc in team1Controller) pc.GetComponent<NetworkObject>().Spawn();
-        foreach (PlayerContoller pc in team2Controller) pc.GetComponent<NetworkObject>().Spawn();
-        for (int i = 0; i < team1.Length; i++) team1Controller[i].InitClientRpc(i);
-        for (int i = 0; i < team2.Length; i++) team2Controller[i].InitClientRpc(i + 5);
+        foreach (PlayerDoll pc in team1Doll) pc.GetComponent<NetworkObject>().Spawn();
+        foreach (PlayerDoll pc in team2Doll) pc.GetComponent<NetworkObject>().Spawn();
+        for (int i = 0; i < team1.Count; i++) team1Doll[i].InitClientRpc(i);
+        for (int i = 0; i < team2.Count; i++) team2Doll[i].InitClientRpc(i + 5);
     }
 
-    public PlayerContoller GetPC(int PCID)
+    private PlayerDoll GetPD(int PCID)
     {
-        foreach (PlayerContoller pc in team1Controller) if (pc.PCID == PCID) return pc;
-        foreach (PlayerContoller pc in team2Controller) if (pc.PCID == PCID) return pc;
+        foreach (PlayerDoll pc in team1Doll) if (pc.PCID == PCID) return pc;
+        foreach (PlayerDoll pc in team2Doll) if (pc.PCID == PCID) return pc;
         return null;
     }
 
-    [ServerRpc(RequireOwnership = false)]
-    public async void MovePCServerRpc(int PCID, Vector3 move)
+    private int GetPCID(ulong id)
     {
-        Debug.Log("Server: MovePCServerRpc");
-        await Task.Delay(200);
-        GetPC(PCID).transform.Translate(move);
+        int pcid = 0;
+        Player p = Vars.sin.LMS.GetPlayer(id);
+        pcid = team1.Contains(p) ? team1.IndexOf(p) : team2.IndexOf(p) + 5;
+        return pcid;
     }
 
-    void Start()
+    void FixedUpdate()
     {
-        if (IsServer) GetComponent<NetworkObject>().Spawn();
+        foreach (PlayerDoll pc in team1Doll) pc.UpdateClientRpc(pc.fulc, pc.transform.position, pc.velocity);
+        foreach (PlayerDoll pc in team2Doll) pc.UpdateClientRpc(pc.fulc, pc.transform.position, pc.velocity);
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void MoveDollServerRpc(ulong id, Vector2 velocity)
+    {
+        GetPD(GetPCID(id)).velocity = velocity;
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void GetDollObjServerRpc(ulong id)
+    {
+        Vars.sin.MMC.SetDollObjClientRpc(GetPCID(id), Vars.sin.LMS.SendTo(id));
     }
 }

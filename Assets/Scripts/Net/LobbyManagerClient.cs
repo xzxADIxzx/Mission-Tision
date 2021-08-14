@@ -155,6 +155,18 @@ public class LobbyManagerClient : NetworkBehaviour
         repeate.Translate(0, 12f * size, 0);
         if (repeate.childCount > 5)  Alpha.Off(repeate.GetChild(repeate.childCount - 5).gameObject, 1, 255, 0, true);
     }
+
+    [ClientRpc]
+    public void HidePreviewClientRpc()
+    {
+        // Change to something more pretty...
+        Alpha.Off(MP.transform.GetChild(0).gameObject); //  //
+        Alpha.Off(MPImg.gameObject); //  //
+        Alpha.Off(MPName.gameObject); //  //
+        Alpha.Off(MPDesc.gameObject); //  //
+        foreach (Image img in point) //  //
+            Alpha.Off(img.gameObject, 1, 255, 0, false, true, true, delegate { img.color = new Color(1, 1, 1, .588f); MP.SetActive(false); });
+    }
     
     public void OnDisconnect(ulong id = 0)
     {

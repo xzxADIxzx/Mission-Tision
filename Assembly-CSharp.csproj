@@ -63,15 +63,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Alpha.cs" />
+    <Compile Include="Assets\Scripts\CameraFollow.cs" />
     <Compile Include="Assets\Scripts\DollManager.cs" />
     <Compile Include="Assets\Scripts\ExtensionMethods.cs" />
     <Compile Include="Assets\Scripts\Net\LMConvert.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerClient.cs" />
     <Compile Include="Assets\Scripts\Net\LobbyManagerServer.cs" />
     <Compile Include="Assets\Scripts\Net\Maps.cs" />
+    <Compile Include="Assets\Scripts\Net\MatchManagerClient.cs" />
     <Compile Include="Assets\Scripts\Net\MatchManagerServer.cs" />
+    <Compile Include="Assets\Scripts\Net\PlayerDoll.cs" />
     <Compile Include="Assets\Scripts\Net\ServerStartup.cs" />
-    <Compile Include="Assets\Scripts\PlayerContoller.cs" />
     <Compile Include="Assets\Scripts\Repeate.cs" />
     <Compile Include="Assets\Scripts\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Settings\Settings.cs" />

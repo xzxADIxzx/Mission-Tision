@@ -720,13 +720,7 @@ MonoBehaviour:
     - TEST
     - office
     AllowRuntimeSceneChanges: 0
-    NetworkPrefabs:
-    - Prefab: {fileID: 3169196510944174156, guid: e253c45d123451849bf88f9888303612,
-        type: 3}
-      PlayerPrefab: 0
-    - Prefab: {fileID: 414499776690706611, guid: 01453c69ac23b464eb022163024bcda1,
-        type: 3}
-      PlayerPrefab: 0
+    NetworkPrefabs: []
     PlayerPrefabHash:
       id: 0
     CreatePlayerPrefab: 0
@@ -1258,6 +1252,7 @@ MonoBehaviour:
     desc: 
     color: {r: 0, g: 0, b: 0, a: 0}
     isLobby: 0
+    isLoad: 0
   lobbyID: 0
   ready: 
   mode: Capture the flag
@@ -1269,6 +1264,8 @@ MonoBehaviour:
   MMPrefab: {fileID: 414499776690706611, guid: 01453c69ac23b464eb022163024bcda1, type: 3}
   isReady: 0
   isStart: 0
+  isLoad: 0
+  isClientLoad: 0
   LMC: {fileID: 363355109}
   MMS: {fileID: 0}
   sceneLoader: {fileID: 835284136}
@@ -1417,6 +1414,7 @@ MonoBehaviour:
     - {x: 8, y: 0, z: 0}
     - {x: 8, y: -2, z: 0}
     - {x: 8, y: -4, z: 0}
+  modes: []
 --- !u!114 &401336490 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3230239370342896888, guid: e22142a2710ca3043b80a96037d25bf7,

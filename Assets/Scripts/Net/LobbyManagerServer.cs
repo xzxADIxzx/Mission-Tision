@@ -48,7 +48,6 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] private string mode;
     [SerializeField] private string map;
     [SerializeField] private List<string> modes;
-    [SerializeField] private GameObject MMPrefab;
     [Header("Status")]
     [SerializeField] public bool isReady;
     [SerializeField] public bool isStart;
@@ -56,7 +55,6 @@ public class LobbyManagerServer : NetworkBehaviour
     [SerializeField] public bool isClientLoad;
     [Header("Scripts")]
     [SerializeField] private LobbyManagerClient LMC;
-    [SerializeField] private MatchManagerServer MMS;
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private NetworkManager netMan;
 
@@ -90,6 +88,9 @@ public class LobbyManagerServer : NetworkBehaviour
         }
 
         // Some Code for Init Match...
+        Vars.sin.MMS.Init(team1, team2, map, mode);
+        Vars.sin.MMC.InitClientRpc();
+        Vars.sin.LMC.HidePreviewClientRpc();
     }
 
     public ClientRpcParams SendTo(ulong id)

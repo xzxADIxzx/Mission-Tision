@@ -1459,6 +1459,92 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488137189}
   m_CullTransparentMesh: 0
+--- !u!1 &533585223
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 533585226}
+  - component: {fileID: 533585225}
+  - component: {fileID: 533585224}
+  - component: {fileID: 533585227}
+  m_Layer: 0
+  m_Name: Match Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &533585224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533585223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af8627def02dd8440acfda86b7dc1ca2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  velocity: {x: 0, y: 0}
+  isStarted: 0
+--- !u!114 &533585225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533585223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6aae2b29ac4469499cec560da56aaae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  team1: []
+  team2: []
+  team1Doll: []
+  team2Doll: []
+  spawnPoint: []
+  map: 
+  mode: 
+  playerPrefab: {fileID: 3783911882478375671, guid: 549b081b6e14da3478805d27f05c6581,
+    type: 3}
+--- !u!4 &533585226
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533585223}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &533585227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 533585223}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NetworkInstanceId: 0
+  PrefabHash: 173513051844165405
+  PrefabHashGenerator: Match Manager
+  AlwaysReplicateAsRoot: 0
+  DontDestroyWithOwner: 0
 --- !u!1 &559107018
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,10 +1612,7 @@ MonoBehaviour:
     - office
     AllowRuntimeSceneChanges: 1
     NetworkPrefabs:
-    - Prefab: {fileID: 3169196510944174156, guid: e253c45d123451849bf88f9888303612,
-        type: 3}
-      PlayerPrefab: 0
-    - Prefab: {fileID: 414499776690706611, guid: 01453c69ac23b464eb022163024bcda1,
+    - Prefab: {fileID: 3783911882478375671, guid: 549b081b6e14da3478805d27f05c6581,
         type: 3}
       PlayerPrefab: 0
     PlayerPrefabHash:
@@ -1972,7 +2055,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1079771410
 GameObject:
@@ -2155,11 +2238,14 @@ MonoBehaviour:
   UNT: {fileID: 559107020}
   LMC: {fileID: 4740096159808437393}
   LMS: {fileID: 4740096159808437484}
+  MMC: {fileID: 533585224}
+  MMS: {fileID: 533585225}
   SLD: {fileID: 1432880551}
   SSU: {fileID: 2098958138}
   MAP: {fileID: 1074858541}
   NMO: {fileID: 559107018}
   LMO: {fileID: 4740096159808437734}
+  MMO: {fileID: 533585223}
   SLO: {fileID: 1432880550}
   SSO: {fileID: 2098958137}
   MPO: {fileID: 1074858540}
@@ -2362,7 +2448,7 @@ RectTransform:
   - {fileID: 1707342082}
   - {fileID: 1935933482}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -3059,7 +3145,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2101760630 stripped
 GameObject:
@@ -3478,13 +3564,11 @@ MonoBehaviour:
   - Capture the flag
   - Hassle
   - Bots attack
-  MMPrefab: {fileID: 414499776690706611, guid: 01453c69ac23b464eb022163024bcda1, type: 3}
   isReady: 0
   isStart: 0
   isLoad: 0
   isClientLoad: 0
   LMC: {fileID: 4740096159808437393}
-  MMS: {fileID: 0}
   sceneLoader: {fileID: 1432880551}
   netMan: {fileID: 559107021}
 --- !u!114 &4740096159808437485
@@ -3660,8 +3744,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -177.5, y: 0}
-  m_SizeDelta: {x: -355, y: 0}
+  m_AnchoredPosition: {x: -230, y: -32.5}
+  m_SizeDelta: {x: -460, y: 65}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &4740096159808437594
 RectTransform:
