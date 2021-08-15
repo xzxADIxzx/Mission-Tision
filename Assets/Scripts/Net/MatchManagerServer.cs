@@ -61,14 +61,16 @@ public class MatchManagerServer : NetworkBehaviour
 
     void FixedUpdate()
     {
-        foreach (PlayerDoll pc in team1Doll) pc.UpdateClientRpc(pc.fulc, pc.transform.position, pc.velocity);
-        foreach (PlayerDoll pc in team2Doll) pc.UpdateClientRpc(pc.fulc, pc.transform.position, pc.velocity);
+        foreach (PlayerDoll pc in team1Doll) pc.UpdateClientRpc(pc.fulc, pc.fulc % 300 == 0, pc.transform.position, pc.velocity, pc.mouse);
+        foreach (PlayerDoll pc in team2Doll) pc.UpdateClientRpc(pc.fulc, pc.fulc % 300 == 0, pc.transform.position, pc.velocity, pc.mouse);
     }
 
     [ServerRpc(RequireOwnership = false)]
-    public void MoveDollServerRpc(ulong id, Vector2 velocity)
+    public void UpdateDollServerRpc(ulong id, Vector2 velocity, Vector2 mouse)
     {
-        GetPD(GetPCID(id)).velocity = velocity;
+        PlayerDoll pd = GetPD(GetPCID(id));
+        pd.velocity = velocity;
+        pd.mouse = mouse;
     }
 
     [ServerRpc(RequireOwnership = false)]
